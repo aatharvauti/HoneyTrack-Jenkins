@@ -5,8 +5,10 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // sh "cd docker && docker build -t auti/honeytrack ."
-                    sh "docker build -f docker/Dockerfile -t auti/ht ."
+                    sh 'echo { >> /etc/docker/daemon.json'
+                    sh 'echo "dns": ["8.8.8.8", "8.8.4.4"] >> /etc/docker/daemon.json'
+                    sh 'echo } >> /etc/docker/daemon.json'
+                    sh 'docker build -f docker/Dockerfile -t auti/ht .'
                 }
             }
         }

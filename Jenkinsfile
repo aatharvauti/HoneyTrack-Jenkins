@@ -5,7 +5,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "sudo docker build -t auti/honeytrack -f docker/Dockerfile"
+                    sh "docker build -t auti/honeytrack -f docker/Dockerfile"
                 }
             }
         }
@@ -14,13 +14,13 @@ pipeline {
                 script {
                     // Run Docker container and capture container ID
 
-                    def containerId = sh(script: "sudo docker container run --restart=always -d --name ssh-server -p 999:22 auti/honeytrack", returnStdout: true).trim()
+                    def containerId = sh(script: "docker container run --restart=always -d --name ssh-server -p 999:22 auti/honeytrack", returnStdout: true).trim()
 
                     // Wait for the container to start
                     sleep 10
 
                     // Execute command inside the Docker container
-                    sh "sudo docker exec ${containerId} tail -n 1 ~/start.sh | grep 'good to go!'"
+                    sh "docker exec ${containerId} tail -n 1 ~/start.sh | grep 'good to go!'"
                 }
             }
         }

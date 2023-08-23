@@ -5,7 +5,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t auti/honeytrack -f docker/Dockerfile"
+                    sh "cd docker && docker build -t auti/honeytrack ."
                 }
             }
         }
